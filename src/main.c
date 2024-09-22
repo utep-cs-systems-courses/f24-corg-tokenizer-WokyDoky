@@ -6,30 +6,20 @@
 
 
 int main (){
-    char str[] = "   The cake is a lie";
+    char str[] = "The cake is a lie";
     
-    char *token = token_start(str);
-    
-    if (token) {
-        printf("The first token starts with: '%c'\n", *token);
-        printf("The first token is: \"%s\"\n", token);
-    } else {
-        printf("No tokens found.\n");
+    // Tokenize the input string
+    char **tokens = tokenize(str);
+
+    // Check if the function returned NULL
+    if (tokens == NULL) {
+        printf("No tokens found or an error occurred.\n");
+        return 1;
     }
 
-    printf("===================== \n");
-
-    char *original = "Hello, world!";
-    short len = 5;
-
-    char *copiedStr = copy_str(original, len);
+    print_tokens(tokens);
+    free_tokens(tokens);
     
-    if (copiedStr != NULL) {
-        printf("Original string: %s\n", original);
-        printf("Copied string: %s\n", copiedStr);
-        free(copiedStr); // Free the allocated memory
-    } else {
-        printf("String copy failed.\n");
-    }
+
     return 0;
 }

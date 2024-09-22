@@ -91,16 +91,59 @@ char *copy_str(char *inStr, short len){
 char **tokenize(char* str){
     // Double *asterisks mean func returns pointer to a pointer
     // We have lost the plot.
+    // Puedes pensarlos un poco como arrays. Son cubetas donde 
+    //  C dedice alocar memoria. 
+    //  Ejemplo: [][][], donde cada espacio es un pointer. 
+    // De la misma manera, un char* funciona muy similar a una string. 
 
-    
+    //Checks. 
+    if (str == NULL) return NULL;
+    int token_count = count_tokens(str);
+    if (token_count == 0) return NULL;
+
+    char **tokens = (char **)malloc((token_count + 1) * sizeof(char *));
+
+    //Extract and copy each token
+    // We start at memory pos. 
+    char *current_pos = str;
+    for (int i = 0; i < token_count; i++) {
+        char *start = token_start(current_pos);
+        if (start == NULL) break;
+
+        // Find the end of the current token
+        char *end = start;
+        while (non_space_char(*end)) {
+            end++;
+        }
+
+        // Calculate the length of the current token
+        int len = end - start;
+
+        // Copy the token into freshly allocated memory
+        tokens[i] = copy_str(start, len);
+
+        // Move the current position pointer past this token
+        current_pos = end;
+    }
+
+    // Step 4: Null-terminate the array of strings
+    tokens[token_count] = NULL;
+
+    return tokens;
 }
 
 /* Prints all tokens. */
 void print_tokens(char **tokens){
-
+    printf("===\n");
+    for (int i = 0; tokens[i] != NULL; i++) {
+        printf("Token[%d]: %s\n", i, tokens[i]);
+    }
 }
 
 /* Frees all tokens and the vector containing themx. */
 void free_tokens(char **tokens){
-
+    for (int i = 0; tokens[i] != NULL; i++) {
+        free(tokens[i]);
+    }
+    free(tokens);
 }
