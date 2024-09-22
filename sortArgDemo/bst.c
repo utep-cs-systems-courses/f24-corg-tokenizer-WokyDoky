@@ -3,6 +3,7 @@
 
 BstNode *root = 0;
 
+//Compare
 int bstStrcmp(char *a, char *b) /* return pos if string a > string b, 0 if equal, neg otherwise */
 {
   while (*a && *b) {		/* until end of string */
