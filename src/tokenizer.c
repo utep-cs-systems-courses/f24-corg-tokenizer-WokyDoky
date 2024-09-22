@@ -85,14 +85,14 @@ char *copy_str(char *inStr, short len){
    For example, tokenize("hello world string") would result in:
      tokens[0] = "hello"
      tokens[1] = "world"
-     tokens[2] = "string" 
+     tokens[2] = "string"
      tokens[3] = 0
 */
 char **tokenize(char* str){
     // Double *asterisks mean func returns pointer to a pointer
-    // We have lost the plot. 
+    // We have lost the plot.
 
-
+    
 }
 
 /* Prints all tokens. */
