@@ -10,18 +10,23 @@ int main (){
     List *historyList = init_history();
     char input[MAX_INPUT_SIZE];
 
-    printf("Press 0 to exit code. ");
+    printf("Commands start with ! \n");
+    printf("0 to exit. \n");
     while (1) {
         // Display prompt indicator
         printf("> ");
         if (fgets(input, MAX_INPUT_SIZE, stdin) == NULL) {
             break;
         }
+        
 
         // Remove newline character from the input
         size_t len = strlen(input);
         if (len > 0 && input[len - 1] == '\n') {
             input[len - 1] = '\0';
+        }
+        if (strcmp(input, "0") == 0) {
+            break;
         }
 
         // Check if the input is to recall history (!id)
@@ -37,9 +42,6 @@ int main (){
         // Check if the input is "history" to print all history entries
         else if (strcmp(input, "history") == 0) {
             print_history(historyList);
-        }
-        else if (strcmp(input, "0") == 0) {
-            break;
         }
         // Otherwise, add the input to history
         else {
