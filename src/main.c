@@ -1,55 +1,54 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "tokenizer.h"
 #include "history.h"
+
 #define MAX_INPUT_SIZE 256
 
+int main(){
+	puts("Welcome!");
+		
+	List *list = init_history();
+	char input[MAX_INPUT_SIZE];
+	char count = 0;
+    printf("Provide your input to tokenize (h for history | #num for specific history | q for quit): \n");
+	while(1){
+		fputs("\n >", stdout);
+		fflush(stdout);
+		char count_in = count;
 
-int main (){
-    List *historyList = init_history();
-    char input[MAX_INPUT_SIZE];
+		char curr_char = getchar();
 
-    printf("Commands start with ! \n");
-    printf("0 to exit. \n");
-    while (1) {
-        // Display prompt indicator
-        printf("> ");
-        if (fgets(input, MAX_INPUT_SIZE, stdin) == NULL) {
-            break;
-        }
-        
+		while(curr_char != '\n'){
+			input[count] = curr_char;
+			curr_char = getchar();
+			count++;
+		}
+		
+		if (input[count_in] == 'h' && (count-count_in) == 1){
+			printf("Printing full History: \n");
+			print_history(list);			
+		}else if (input[count_in] == '#' && (count-count_in) == 2){
+			int num = (int)input[count_in+1] -48;
+			printf("Getting item %d from History: \n%d:", num, num);
+			char *word = get_history(list, num);
+			while (*word != 0){
+				putchar(*word);
+				word++;
+			}
+			putchar('\n');
+		}else if (input[count_in] == 'q' && (count-count_in) == 1){
+			break;
+		}else{
+			printf("Tokenizing your input: \n");
+			char **tokens = tokenize(&input[count_in]);
+			print_tokens(tokens);
+			add_history(list, &input[count_in]);
+            free(tokens);
+		}
+		count ++;	
+	}
 
-        // Remove newline character from the input
-        size_t len = strlen(input);
-        if (len > 0 && input[len - 1] == '\n') {
-            input[len - 1] = '\0';
-        }
-        if (strcmp(input, "0") == 0) {
-            break;
-        }
+	printf("Terminating program...\n");
 
-        // Check if the input is to recall history (!id)
-        if (input[0] == '!' && strlen(input) > 1) {
-            int id = atoi(input + 1);
-            char *historyEntry = get_history(historyList, id);
-            if (historyEntry != NULL) {
-                printf("Recalled: %s\n", historyEntry);
-            } else {
-                printf("No history entry found for id %d.\n", id);
-            }
-        }
-        // Check if the input is "history" to print all history entries
-        else if (strcmp(input, "history") == 0) {
-            print_history(historyList);
-        }
-        // Otherwise, add the input to history
-        else {
-            add_history(historyList, input);
-        }
-    }
-
-    // Free the allocated memory
-    free_history(historyList);
-    return 0;
 }

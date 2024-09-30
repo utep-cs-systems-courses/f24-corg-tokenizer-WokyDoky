@@ -19,9 +19,10 @@
   */
   void add_history(List *list, char *str){
     if (list == NULL) return;
-
+  
     Item *newItem = (Item *)malloc(sizeof(Item));
-    newItem->str = str; //Posible strdup(str);
+    newItem->str = str;
+    newItem->next = NULL;
 
     if (list->root == NULL) {
         newItem->id = 1;
@@ -54,23 +55,34 @@
   /*Print the entire contents of the list. */
   void print_history(List *list){
     if (list == NULL) return;
+    
+
+    printf("HistoryPrinter \n");
     Item *current = list->root;
-    while (current -> next != NULL) {
-        printf("H[%d]: %s \n", current -> id, current -> str);
+    while (current != NULL) {
+        printf("H[%d]: %s \n", current->id, current->str);
         current = current->next;
     }
   }
 
   /*Free the history list and the strings it references. */
   void free_history(List *list){
-    if (list == NULL) return;
-
-    Item *current = list->root;
-    while (current != NULL) {
-        Item *nextItem = current->next;
-        free(current->str); // Free the duplicated string
-        free(current);      // Free the node itself
-        current = nextItem;
-    }
     free(list); // Free the list structure itself
   }
+
+  //-------------------------------------------------------
+  // ====================Testing==========================
+  //-------------------------------------------------------
+
+  void pruebas() {
+    List *testList = init_history();
+    
+    add_history(testList, "The cake is a lie!");
+    add_history(testList, "But it was delicious.");
+    add_history(testList, "True.");
+    
+    printf("\n--- Testing print_history ---\n");
+    print_history(testList);
+    
+    free_history(testList);
+}

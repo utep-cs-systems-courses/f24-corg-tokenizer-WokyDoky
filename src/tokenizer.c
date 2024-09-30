@@ -16,7 +16,7 @@ int space_char(char c){
    character (not tab or space).  
    Zero terminators are not printable (therefore false) */ 
 int non_space_char(char c){
-    return (c != ' ' && c != '\t' && c != '\0') ? 1 : 0;
+    return (c == ' ' || c == '\t' || c == '\0') ? 0 : 1;
 }
 
 /* Returns a pointer to the first character of the next 
