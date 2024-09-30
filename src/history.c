@@ -38,19 +38,19 @@
 
   }
 
-  /* Retrieve the string stored in the node where Item->id == id.
+/* Retrieve the string stored in the node where Item->id == id.
     List* list - the linked list
     int id - the id of the Item to find */
-  char *get_history(List *list, int id){
+char *get_history_recursive(Item *current, int id) {
+    if (current == NULL) return NULL; 
+    if (current->id == id) return current->str;  
+    return get_history_recursive(current->next, id);
+}
+
+char *get_history(List *list, int id) {
     if (list == NULL) return NULL;
-    Item *current = list->root;
-    while (current -> next != NULL) {
-        if (current -> id == id) return current -> str;
-        current = current->next;
-    }
-    return NULL; //Not found.  
-    
-  }
+    return get_history_recursive(list->root, id);  // Start the recursion
+}
 
   /*Print the entire contents of the list. */
   void print_history(List *list){
@@ -83,6 +83,6 @@
     
     printf("\n--- Testing print_history ---\n");
     print_history(testList);
-    
+    printf("Pruebas: %s", get_history(testList, 3));
     free_history(testList);
 }
