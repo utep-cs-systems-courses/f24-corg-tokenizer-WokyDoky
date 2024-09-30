@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/oto/Documents/Tarea/corg/f24-corg-tokenizer-WokyDoky",
-      "program": "/home/oto/Documents/Tarea/corg/f24-corg-tokenizer-WokyDoky/build/Debug/outDebug",
+      "cwd": "/home/oto/Documents/Tarea/corg/f24-corg-tokenizer-WokyDoky/src",
+      "program": "/home/oto/Documents/Tarea/corg/f24-corg-tokenizer-WokyDoky/src/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
