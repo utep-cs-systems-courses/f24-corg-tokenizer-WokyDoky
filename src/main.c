@@ -5,9 +5,10 @@
 #define MAX_INPUT_SIZE 256
 
 int main(){
-    pruebas();
+    printf("===================================================================\n");
 	puts("Commands => h for history | #num for specific history | q for quit");
-		
+    printf("===================================================================\n");
+
 	List *list = init_history();
 	char input[MAX_INPUT_SIZE];
 	char count = 0;
@@ -15,10 +16,8 @@ int main(){
 		fputs("\n>", stdout);
 		fflush(stdout);
 		char count_in = count;
-
 		char curr_char = getchar();
 
-		while(curr_char == '\n');
 		while(curr_char != '\n'){
 			input[count] = curr_char;
 			curr_char = getchar();
@@ -26,28 +25,23 @@ int main(){
 		}
 		
 		if (input[count_in] == 'h' && (count-count_in) == 1){
-			printf("Printing full History: \n");
+			printf("Full History: \n");
 			print_history(list);			
 		}else if (input[count_in] == '#' && (count-count_in) == 2){
 			int num = (int)input[count_in+1] -48;
-			printf("Getting item %d from History: \n%d:", num, num);
-			char *word = get_history(list, num);
-			while (*word != 0){
-				putchar(*word);
-				word++;
-			}
-			putchar('\n');
-		}else if (input[count_in] == 'q' && (count-count_in) == 1){
+			printf("History[%d]: %s \n", num,  get_history(list, num));
+		}else if ((input[count_in] == 'q' || input[count_in] == '0') && (count-count_in) == 1){
 			break;
 		}else{
 			printf("Tokenizing your input: \n");
 			char **tokens = tokenize(&input[count_in]);
 			print_tokens(tokens);
 			add_history(list, &input[count_in]);
+            free(tokens);
 		}
 		count ++;	
 	}
 
-	printf("Have a nice day!\n");
+	printf("Terminating program...!\n");
 
 }
